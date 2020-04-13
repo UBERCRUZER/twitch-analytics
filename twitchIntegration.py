@@ -4,8 +4,12 @@ secretFile = open("secret.txt")
 secret = secretFile.read()
 secretFile.close()
 
+IDFile = open("clientID.txt")
+clientID = IDFile.read()
+IDFile.close()
+
 BASE_URL = 'https://api.twitch.tv/helix/'
-CLIENT_ID = 'z7foqecgb543nv0n7jb7chs51m1lfl'
+CLIENT_ID = clientID
 HEADERS = {'Client-ID': CLIENT_ID}
 INDENT = 4
 
@@ -31,8 +35,15 @@ def get_user_query(user_login):
 def get_user_videos_query(user_id):
     return 'videos?user_id={0}&first=50'.format(user_id)
 
-def get_followers_to(user_id):
-    return 'users/follows?to_id={0}'.format(user_id)
+def get_followers_to(user_id, first=0, after=None):
+    if ((after == None) & (first > 0)):
+        return 'users/follows?to_id={0}&first={1}'.format(user_id, first)
+    elif ((after != None) & (first == 0)):
+        return 'users/follows?to_id={0}&after={1}'.format(user_id, after)
+    elif ((after != None) & (first > 0)):
+        return 'users/follows?to_id={0}&after={1}&first={2}'.format(user_id, after, first)
+    else:
+        return 'users/follows?to_id={0}'.format(user_id)
 
 def get_games_query():
     return 'games/top'
