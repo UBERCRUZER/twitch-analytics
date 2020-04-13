@@ -3,6 +3,7 @@ import json
 import pandas as pd 
 import numpy as np
 import os
+import time
 
 
 # user_login = 'martinimonsters'
@@ -16,8 +17,8 @@ with open(sampFile) as sample:
 
 
 totalFollowers = sampleReq['total']
-# totalReq = int(round(totalFollowers / 100))
-totalReq = int(round(500 / 100))
+totalReq = int(round(totalFollowers / 100))
+# totalReq = int(round(500 / 100))
 
 pageinationCursor = None
 
@@ -36,8 +37,10 @@ for reqNum in range(0, totalReq):
 
     with open(filePath, "w") as outfile: 
         json.dump(response.json(), outfile) 
+    
+    # 1 second pause keep API limit happy
+    time.sleep(1)
 
-    # ADD IN A SECOND PAUSE FOR RATE LIMIT
-
+    print('Finished', reqNum, 'out of', totalReq)
 
 
