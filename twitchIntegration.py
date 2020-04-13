@@ -32,7 +32,7 @@ def get_user_videos_query(user_id):
     return 'videos?user_id={0}&first=50'.format(user_id)
 
 def get_followers_to(user_id):
-    return 'users/follows?to_id={0}&first=50'.format(user_id)
+    return 'users/follows?to_id={0}'.format(user_id)
 
 def get_games_query():
     return 'games/top'
