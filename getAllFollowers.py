@@ -10,13 +10,10 @@ import time
 
 user_id = '42599044'
 
+query = twitchIntegration.get_followers_to(user_id)
+response = twitchIntegration.get_response(query)
 
-sampFile = 'first100.json'
-with open(sampFile) as sample:
-    sampleReq = json.load(sample)
-
-
-totalFollowers = sampleReq['total']
+totalFollowers = response.json()['total']
 totalReq = int(round(totalFollowers / 100))
 # totalReq = int(round(500 / 100))
 
@@ -42,8 +39,8 @@ for reqNum in range(0, totalReq):
         with open(filePath, "w") as outfile: 
             json.dump(response.json(), outfile) 
 
-
         print('Finished', reqNum, 'out of', totalReq)
+        
     except:
         print('Eff.')
 
