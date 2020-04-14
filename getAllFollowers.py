@@ -10,8 +10,11 @@ import time
 
 user_id = '42599044'
 
-query = twitchIntegration.get_followers_to(user_id)
-response = twitchIntegration.get_response(query)
+session = twitchIntegration.twitchAPI()
+
+
+query = session.get_followers_to(user_id)
+response = session.get_response(query)
 
 totalFollowers = response.json()['total']
 totalReq = int(round(totalFollowers / 100))
@@ -19,14 +22,17 @@ totalReq = int(round(totalFollowers / 100))
 
 pageinationCursor = None
 
+print(totalFollowers)
+
+
 for reqNum in range(0, totalReq):
     try:
         # loop request
-        query = twitchIntegration.get_followers_to(user_id, first=100, after=pageinationCursor)
-        response = twitchIntegration.get_response(query)
+        query = session.get_followers_to(user_id, first=100, after=pageinationCursor)
+        response = session.get_response(query)
         
-        # 1 second pause keep API limit happy
-        time.sleep(2)
+        # # 1 second pause keep API limit happy
+        # time.sleep(.5)
 
         # set pagination cursor for next loop
         pageinationCursor = response.json()['pagination']['cursor']
