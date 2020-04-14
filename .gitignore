@@ -4,3 +4,5 @@ followers/
 clientID.txt
 .vscode/
 followers.csv
+following/
+busted.json

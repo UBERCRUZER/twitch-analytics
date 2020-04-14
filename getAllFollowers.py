@@ -1,7 +1,7 @@
 import twitchIntegration
 import json
-import pandas as pd 
-import numpy as np
+# import pandas as pd 
+# import numpy as np
 import os
 import time
 
@@ -12,12 +12,14 @@ user_id = '42599044'
 
 session = twitchIntegration.twitchAPI()
 
-
 query = session.get_followers_to(user_id)
 response = session.get_response(query)
 
 totalFollowers = response.json()['total']
-totalReq = int(round(totalFollowers / 100))
+
+print(totalFollowers)
+
+totalReq = int(totalFollowers / 100)
 # totalReq = int(round(500 / 100))
 
 pageinationCursor = None
